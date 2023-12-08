@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: product-webflux
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb}

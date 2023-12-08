@@ -6,7 +6,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     ports:
-      - "27017:27017"
+      - "27000:27017"
   mongo-express:
     image: mongo-express:1.0.0-18-alpine3.18
     restart: always
@@ -18,5 +18,16 @@ services:
       ME_CONFIG_BASICAUTH_USERNAME: user
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+    depends_on:
+      - mongo
+  product-webflux:
+    build:
+      context: ..
+      dockerfile: devops/Dockerfile
+    image: product-webflux:1.0
+    environment:
+      MONGODB_URI: mongodb://root:example@mongo:27017/store-db?authSource=admin
+    ports:
+      - "8090:8090"
     depends_on:
       - mongo
