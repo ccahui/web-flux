@@ -18,7 +18,6 @@ public class InsertData implements CommandLineRunner {
     private final RepositoryProduct repositoryProduct;
     @Override
     public void run(String... args) throws Exception {
-
         List<Product> products = List.of(new Product("TV Panasonic Pantalla LCD", 456.89),
                 new Product("Sony Camara HD Digital", 177.89),
                 new Product("Apple iPod", 46.89),
@@ -29,8 +28,10 @@ public class InsertData implements CommandLineRunner {
                 new Product("Mica Cómoda 5 Cajones", 150.89),
                 new Product("TV Sony Bravia OLED 4K Ultra HD", 2255.89)
         );
-        Flux<Product> $products = Flux.fromIterable(products);
-
-        $products.flatMap(product -> repositoryProduct.save(product)).subscribe(product -> log.info("Insert: "+product));
+        repositoryProduct.deleteAll()
+                .thenMany(Flux.fromIterable(products))
+                .flatMap(repositoryProduct::save)
+                .subscribe(product -> log.info("Insert: " + product));
     }
+
 }
