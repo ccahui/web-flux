@@ -1,0 +1,110 @@
+[
+  {
+    "id": "65765472476deb3749a64500",
+    "name": "SONY CAMARA HD DIGITAL",
+    "price": 177.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64506",
+    "name": "MICA CÓMODA 5 CAJONES",
+    "price": 150.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64505",
+    "name": "HP NOTEBOOK OMEN 17",
+    "price": 2500.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64507",
+    "name": "TV SONY BRAVIA OLED 4K ULTRA HD",
+    "price": 2255.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64501",
+    "name": "APPLE IPOD",
+    "price": 46.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64502",
+    "name": "SONY NOTEBOOK",
+    "price": 846.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a644ff",
+    "name": "TV PANASONIC PANTALLA LCD",
+    "price": 456.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64504",
+    "name": "BIANCHI BICICLETA",
+    "price": 70.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "65765472476deb3749a64503",
+    "name": "HEWLETT PACKARD MULTIFUNCIONAL",
+    "price": 200.89,
+    "createdAt": "2023-12-11T00:14:42.899+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d930f",
+    "name": "TV PANASONIC PANTALLA LCD",
+    "price": 456.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9310",
+    "name": "SONY CAMARA HD DIGITAL",
+    "price": 177.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9311",
+    "name": "APPLE IPOD",
+    "price": 46.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9312",
+    "name": "SONY NOTEBOOK",
+    "price": 846.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9316",
+    "name": "MICA CÓMODA 5 CAJONES",
+    "price": 150.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9315",
+    "name": "HP NOTEBOOK OMEN 17",
+    "price": 2500.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9314",
+    "name": "BIANCHI BICICLETA",
+    "price": 70.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9313",
+    "name": "HEWLETT PACKARD MULTIFUNCIONAL",
+    "price": 200.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  },
+  {
+    "id": "6576547a9fb01e778b1d9317",
+    "name": "TV SONY BRAVIA OLED 4K ULTRA HD",
+    "price": 2255.89,
+    "createdAt": "2023-12-11T00:14:50.674+00:00"
+  }
+]

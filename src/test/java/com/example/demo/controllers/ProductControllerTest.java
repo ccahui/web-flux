@@ -5,6 +5,10 @@ import com.example.demo.models.Product;
 import com.example.demo.repository.RepositoryProduct;
 import com.example.demo.service.ServiceProduct;
 import com.example.demo.utils.CopyProperties;
+import com.example.demo.utils.JsonConverterUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -22,10 +26,10 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -41,18 +45,21 @@ class ProductControllerTest {
     @Autowired
     private WebTestClient webTestClient;
     @Autowired
-    private CopyProperties copyProperties;
+    private JsonConverterUtil jsonConverterUtil;
     private String URL = "/api"+ProductController.PRODUCT;
+    @BeforeAll
+    public static void setUp() {
+        // Configurar el idioma deseado para las pruebas (español en este ejemplo debido a que los mensajes de validacion 400 lo esperamos en español)
+        Locale.setDefault(new Locale("es", "PE"));
+        System.out.println("Configuración regional Nueva: " + Locale.getDefault());
+        System.out.println("Configuración de la zona horaria Nueva: " + TimeZone.getDefault().getID());
+    }
     @Test
     void all() {
-        List<Product> products = List.of(new Product("TV Panasonic Pantalla LCD", 456.89),
-                new Product("Sony Camara HD Digital", 177.89));
-        products.forEach(element->element.setId(UUID.randomUUID().toString()));
-
+        List<Product> products = jsonConverterUtil.readJsonFile(URL + "/products.json", new TypeReference<List<Product>>() {});
 
         Flux<Product> $products = Flux.fromIterable(products);
         Mockito.when(repositoryProduct.findAll()).thenReturn($products);
-
         webTestClient.get()
                 .uri(URL)
                 .exchange()
@@ -62,10 +69,7 @@ class ProductControllerTest {
     }
     @Test
     void allConsumeWith() {
-        List<Product> products = List.of(new Product("TV Panasonic Pantalla LCD", 456.89),
-                new Product("Sony Camara HD Digital", 177.89));
-        products.forEach(element->element.setId(UUID.randomUUID().toString()));
-
+        List<Product> products = jsonConverterUtil.readJsonFile(URL + "/products.json", new TypeReference<List<Product>>() {});
 
         Flux<Product> $products = Flux.fromIterable(products);
         Mockito.when(repositoryProduct.findAll()).thenReturn($products);
@@ -82,10 +86,7 @@ class ProductControllerTest {
     }
     @Test
     void show() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
-
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
         Mono<Product> $product = Mono.just(product);
         Mockito.when(repositoryProduct.findById(product.getId())).thenReturn($product);
 
@@ -103,9 +104,7 @@ class ProductControllerTest {
     }
     @Test
     void showJsonPath() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
 
         Mono<Product> $product = Mono.just(product);
         Mockito.when(repositoryProduct.findById(product.getId())).thenReturn($product);
@@ -121,9 +120,7 @@ class ProductControllerTest {
     }
     @Test
     void showIDMockitoAnyString() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
 
         Mono<Product> $product = Mono.just(product);
         Mockito.when(repositoryProduct.findById(Mockito.anyString())).thenReturn($product);
@@ -143,9 +140,7 @@ class ProductControllerTest {
     }
     @Test
     void showNotFound() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
 
         Mono<Product> $product = Mono.just(product);
         Mockito.when(repositoryProduct.findById(product.getId())).thenReturn(Mono.empty());
@@ -160,11 +155,8 @@ class ProductControllerTest {
     }
     @Test
     void create() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
-        ProductCreateDto productDto = new ProductCreateDto();
-        copyProperties.copyProperties(product, productDto);
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
+        ProductCreateDto productDto = jsonConverterUtil.readJsonFile(URL+"/productCreateDto.json", new TypeReference<ProductCreateDto>(){});
 
         // Obtengo el valor que se guardara en la BD al llamar al metodo save dentro del repository
         ArgumentCaptor<Product> productCaptor = ArgumentCaptor.forClass(Product.class);
@@ -185,7 +177,10 @@ class ProductControllerTest {
     }
     @Test
     void createNameIsRequired() {
-        ProductCreateDto productDto = new ProductCreateDto("",456.89);
+        System.out.println("Configuración regional actual: " + Locale.getDefault());
+        System.out.println("Configuración de la zona horaria actual: " + TimeZone.getDefault().getID());
+
+        ProductCreateDto productDto = jsonConverterUtil.readJsonFile(URL+"/productCreateDtoNameEmpty.json", new TypeReference<ProductCreateDto>(){});
 
         webTestClient.post()
                 .uri(URL)
@@ -200,8 +195,7 @@ class ProductControllerTest {
     }
     @Test
     void delete() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
+        Product product = jsonConverterUtil.readJsonFile(URL + "/product.json", new TypeReference<Product>() {});
 
         Mockito.when(repositoryProduct.deleteById(product.getId())).thenReturn(Mono.empty());
 
@@ -217,11 +211,7 @@ class ProductControllerTest {
     }
     @Test
     void deleteAll() {
-        Product product = new Product("TV Panasonic Pantalla LCD", 456.89);
-        product.setId(UUID.randomUUID().toString());
-
         Mockito.when(repositoryProduct.deleteAll()).thenReturn(Mono.empty());
-
 
         String deleteAllUrl = URL + "/all";
         webTestClient.delete()

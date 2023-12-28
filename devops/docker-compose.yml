@@ -5,21 +5,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27000:27017"
-  mongo-express:
-    image: mongo-express:1.0.0-18-alpine3.18
-    restart: always
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_BASICAUTH_USERNAME: user
-      ME_CONFIG_BASICAUTH_PASSWORD: 123456
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
-    depends_on:
-      - mongo
   product-webflux:
     build:
       context: ..
@@ -28,6 +13,15 @@ services:
     environment:
       MONGODB_URI: mongodb://root:example@mongo:27017/store-db?authSource=admin
     ports:
-      - "8090:8090"
+      - "9090:8090"
     depends_on:
       - mongo
+  product-webflux-client:
+    image: product-webflux-client:1.0
+    environment:
+      PRODUCT_URI: http://product-webflux:8090
+      PRODUCT_API-KEY: product-webflux-api-key
+    ports:
+      - "9095:8095"
+    depends_on:
+      - product-webflux

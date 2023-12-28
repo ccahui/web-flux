@@ -15,6 +15,6 @@ ENV PROFILE=docker
 
 EXPOSE 8090
 
-
 COPY --from=dependencies /target/$ARTIFACT_NAME /app/app.jar
-CMD ["java", "-Dspring.profiles.active=${PROFILE}", "-jar", "/app/app.jar"]
+
+CMD ["java", "-Dspring.profiles.active=${PROFILE}","-Duser.timezone=America/Lima", "-Duser.language=es", "-Duser.country=PE", "-jar", "/app/app.jar"]
